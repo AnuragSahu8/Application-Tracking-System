@@ -11,23 +11,22 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def get_gemini_response(jd,text):
     input_prompt=f"""
-Hey Act Like a skilled or very experience ATS(Application Tracking System)
-with a deep understanding of tech field,software engineering,data science ,data analyst,Machine learning
-and big data engineer choose any one according to the jd(job description) provided below .Your task is to evaluate the resume based on the given job description.
-You must consider the job market is very competitive and you should provide 
-best assistance for improving the resume. 
-Assign the percentage Matching based on Jd and the missing keywords with high accuracy.
-resume:
-{text}
-description:
-{jd}
+    Hey Act Like a skilled or very experience ATS(Application Tracking System)
+    with a deep understanding of tech field,software engineering,data science ,data analyst,Machine learning
+    and big data engineer choose any one according to the jd(job description) provided below .Your task is to evaluate the resume based on the given job description.
+    You must consider the job market is very competitive and you should provide 
+    best assistance for improving the resume. 
+    Assign the percentage Matching based on Jd and the missing keywords with high accuracy.
+    resume:
+    {text}
+    description:
+    {jd}
 
-I want the response in one single string having the structure like this
-{{"JD Match":"%",
-"MissingKeywords:[]",
-"Profile Summary":""}}
-"""
-    print(input_prompt)
+    I want the response in one single string having the structure like this
+    {{"JD Match":"%",
+    "MissingKeywords:[]",
+    "Profile Summary":""}}
+    """
     model=genai.GenerativeModel('gemini-pro')
     response=model.generate_content(input_prompt)
     return response.text
