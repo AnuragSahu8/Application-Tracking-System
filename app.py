@@ -9,9 +9,27 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 
 
-def get_gemini_response(input):
+def get_gemini_response(jd,text):
+    input_prompt=f"""
+Hey Act Like a skilled or very experience ATS(Application Tracking System)
+with a deep understanding of tech field,software engineering,data science ,data analyst,Machine learning
+and big data engineer choose any one according to the jd(job description) provided below .Your task is to evaluate the resume based on the given job description.
+You must consider the job market is very competitive and you should provide 
+best assistance for improving the resume. 
+Assign the percentage Matching based on Jd and the missing keywords with high accuracy.
+resume:
+{text}
+description:
+{jd}
+
+I want the response in one single string having the structure like this
+{{"JD Match":"%",
+"MissingKeywords:[]",
+"Profile Summary":""}}
+"""
+    print(input_prompt)
     model=genai.GenerativeModel('gemini-pro')
-    response=model.generate_content(input)
+    response=model.generate_content(input_prompt)
     return response.text
 
 
@@ -24,24 +42,6 @@ def input_pdf_text(uploaded_file):
     return text
 
 
-input_prompt="""
-Hey Act Like a skilled or very experience ATS(Application Tracking System)
-with a deep understanding of tech field,software engineering,data science ,data analyst
-and big data engineer set it according to the job description. Your task is to evaluate the resume based on the given job description.
-You must consider the job market is very competitive and you should provide 
-best assistance for improving the resume. Assign the percentage Matching based 
-on Jd and
-the missing keywords with high accuracy
-resume:{text}
-description:{jd}
-
-I want the response in one single string having the structure like this
-{{"JD Match":"%",
-"MissingKeywords:[]",
-"Profile Summary":""}}
-"""
-
-
 # streamlit app
 st.title("Smart ATS")
 st.text("Improve Your ATS")
@@ -52,8 +52,7 @@ submit=st.button("Submit")
 if submit:
     if uploaded_file is not None:
         text=input_pdf_text(uploaded_file)
-        response=get_gemini_response(input_prompt)
+        response=get_gemini_response(jd,text)
         st.subheader(response)
-
 
 
