@@ -10,4 +10,4 @@ provide the summary of the resume according to JD.
 
 Note** Dont forget to provide the api key
 
-APP URL: https://application-tracking-system-1.streamlit.app/
+APP URL: https://application-tracking-system-0.streamlit.app/
